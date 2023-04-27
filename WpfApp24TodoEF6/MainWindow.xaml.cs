@@ -28,7 +28,6 @@ namespace WpfApp24TodoEF6
 
         private void Create_Click(object sender, RoutedEventArgs e)
         {
-
             try
             {
                 Task task = new Task()
@@ -44,11 +43,9 @@ namespace WpfApp24TodoEF6
             catch (Exception es)
             {
                 MessageBox.Show(es.Message); 
-            }
-
-           
-
+            }           
         }
+        
         private void Remove_Click(object sender, RoutedEventArgs e)
         {           
             var emp_id = (taskDataGrid.SelectedItem as Task).Id;
