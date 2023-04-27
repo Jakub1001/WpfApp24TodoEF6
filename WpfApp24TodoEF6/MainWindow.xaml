@@ -11,12 +11,11 @@
     </Window.Resources>
     <Grid DataContext="{StaticResource taskViewSource}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="160"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch">
@@ -26,26 +25,24 @@
             <Label Content="Deadline:" FontWeight="Bold" FontSize="14"/>
             <DatePicker x:Name="deadline" Width="120" HorizontalAlignment="Left" Margin="3"/>
 
-            <Button x:Name="Create" Content="Create Task" VerticalContentAlignment="Stretch" Grid.Row="0" Grid.Column="0" Click="Create_Click"/>
+            <Button x:Name="Create" Content="Create Task" VerticalContentAlignment="Stretch" Click="Create_Click" Margin="3"/>
+            <Button x:Name="Remove" Content="Remove Tasks" VerticalContentAlignment="Stretch" Click="Remove_Click" ToolTip="Click on Task and then remove it via Button" Margin="3"/>
         </StackPanel>
 
-        <ScrollViewer Grid.Column="0" Grid.Row="1">
-            <StackPanel>
-                <DataGrid VerticalAlignment="Top" x:Name="taskDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource taskViewSource}}" RowDetailsVisibilityMode="VisibleWhenSelected" FontWeight="Bold">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn x:Name="taskNameColumn" Binding="{Binding TaskName}" Header="Task Name" Width="100*"/>
+        <ScrollViewer  Grid.Column="0" Grid.Row="1" VerticalAlignment="Top">
+            <DataGrid  x:Name="taskDataGrid"  AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource taskViewSource}}" RowDetailsVisibilityMode="VisibleWhenSelected" FontWeight="Bold">
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="taskNameColumn" Binding="{Binding TaskName}" Header="Task Name" Width="100*"/>
+                    <DataGridTemplateColumn x:Name="deadlineColumn" Header="Deadline" Width="auto" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding Deadline, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
 
-                        <DataGridTemplateColumn x:Name="deadlineColumn" Header="Deadline" Width="auto" >
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <DatePicker SelectedDate="{Binding Deadline, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-                <Button x:Name="Remove" Content="Remove Tasks" VerticalContentAlignment="Bottom" Click="Remove_Click" VerticalAlignment="Bottom" ToolTip="Klikni na ulohu a vymaz ju tlacitkom"/>
-            </StackPanel>
         </ScrollViewer>
     </Grid>
 </Window>
